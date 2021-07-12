@@ -1,14 +1,12 @@
-const Kernel=require("../NeXT/kernel")
-class ClassName extends Kernel{
-  constructor(){
-    super({
-      
-    })
-    this.name="name";
+const Kernel = require("../NeXT/kernel");
+class AppKernel extends Kernel {
+  constructor() {
+    super({});
+    this.name = "name";
+  }
+  init() {
+    $console.info("init");
   }
 }
 
-
-module.exports = {
-  
-}
+module.exports = AppKernel;
