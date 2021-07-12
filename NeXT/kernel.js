@@ -1,7 +1,9 @@
 const storage = require("./storage"),
+  { File, SQLite } = require("./storage"),
   update = require("./update");
 class AppInfo {
   constructor() {
+    this.file = new File();
     this.filePath = "/config.json";
     this.config = this.getFileData();
     this.name = this.config.info.version;
@@ -9,7 +11,7 @@ class AppInfo {
   }
   getFileData() {
     try {
-      const configString = $file.read(this.filePath);
+      const configString = this.file.read(this.filePath);
       return JSON.parse(configString);
     } catch (error) {
       $console.error(error);
@@ -22,7 +24,7 @@ class Config {
   constructor(configDataDir) {
     this.cache = storage.Cache;
     this.prefs = storage.Prefs;
-    this.sqlite = storage.SQLite;
+    this.sqlite = SQLite;
     this.configDataDir = configDataDir ?? "/assets/.files/.config/";
   }
   setConfigDataDir(newDir) {
