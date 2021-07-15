@@ -33,7 +33,7 @@ class File {
   isExists(path) {
     return path && $file.exists(path);
   }
-  ifFile(path) {
+  isFile(path) {
     return this.isExists(path) && !this.isDirectory(path);
   }
   getFileList(dir, ext = undefined) {
