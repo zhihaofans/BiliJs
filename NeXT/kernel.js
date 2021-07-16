@@ -1,4 +1,4 @@
-const storage = require("./storage"),
+const storage = require("./storage"),SQLite = require("./sqlite"),
   update = require("./update");
 class AppInfo {
   constructor() {
@@ -23,7 +23,7 @@ class Config {
   constructor(configDataDir) {
     this.cache = storage.Cache;
     this.prefs = storage.Prefs;
-    this.sqlite = storage.SQLite;
+    this.sqlite = SQLite;
     this.configDataDir = configDataDir ?? "/assets/.files/.config/";
   }
   setConfigDataDir(newDir) {
