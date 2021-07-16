@@ -1,9 +1,10 @@
 class SQLite {
-  constructor(_dataBaseFile) {
-    this.DATABASEFILE = _dataBaseFile;
+  constructor({ dataBaseFile, tableId }) {
+    this.dataBaseFile = dataBaseFile;
+    this.tableId = tableId;
   }
   init() {
-    return $sqlite.open(this.DATABASEFILE);
+    return $sqlite.open(this.dataBaseFile);
   }
   update(sql, args = undefined) {
     const db = this.init();
@@ -114,6 +115,12 @@ class SQLite {
       $console.error(`SQLite.auto:${_ERROR.message}`);
       return undefined;
     }
+  }
+  getSql(key) {
+    return this.auto(this.tableId, key);
+  }
+  setSql(key, value) {
+    return this.setSimpleData(this.tableId, key, value);
   }
 }
 
