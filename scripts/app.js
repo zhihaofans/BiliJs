@@ -1,11 +1,13 @@
 const Kernel = require("../NeXT/kernel");
 class AppKernel extends Kernel {
   constructor() {
-    super({});
-    this.name = "name";
+    super({ debugMode: true });
   }
   init() {
-    $console.info("init");
+    if (this.debug === true) {
+      $console.info("init");
+      $console.info(this.appInfo);
+    }
   }
 }
 
