@@ -1,9 +1,15 @@
+const storage = require("./storage");
 class SQLite {
   constructor({ dataBaseFile, tableId }) {
     this.dataBaseFile = dataBaseFile;
     this.tableId = tableId;
+    this.file = new storage.File();
   }
   init() {
+    const dataBasrSaveDir = this.file.getDirByFile(this.dataBaseFile);
+    if (!this.file.isFile(dataBasrSaveDir)) {
+      this.file.mkdir(dataBasrSaveDir);
+    }
     return $sqlite.open(this.dataBaseFile);
   }
   update(sql, args = undefined) {

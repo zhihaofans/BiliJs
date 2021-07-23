@@ -1,3 +1,4 @@
+const { UserException } = require("./object");
 class Cache {
   constructor(key) {
     this.KEY = key;
@@ -81,6 +82,16 @@ class File {
       }
     }
     return undefined;
+  }
+  mkdir(dir) {
+    if (this.isFile(dir)) {
+      throw new UserException({
+        name: "File.mkdir",
+        message: `this is file:${dir}`,
+        source: "dir"
+      });
+    }
+    return $file.mkdir(dir);
   }
 }
 class Prefs {
