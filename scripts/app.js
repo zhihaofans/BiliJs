@@ -3,14 +3,14 @@ class AppKernel extends Kernel {
   constructor() {
     super({ debugMode: true });
     this.global = {
-      SQLITE_FILE: "/assets/.files/sqlite.db",
+      SQLITE_FILE: "/assets/.files/sqlite.db"
     };
     this.viewLoader.registerView({
       id: "main",
       title: this.appInfo.name,
       icon: undefined,
       fileName: "main.js",
-      func: "init",
+      func: "init"
     });
     this.viewLoader.setLaunchViewId("main");
   }

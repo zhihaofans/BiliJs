@@ -17,7 +17,7 @@ class ViewLoader {
     this.debug = debug === true;
     this.viewList = {
       viewIdList: [],
-      viewList: {},
+      viewList: {}
     };
     this.launchViewId = "";
   }
@@ -28,7 +28,7 @@ class ViewLoader {
         title,
         icon,
         fileName,
-        func,
+        func
       });
       this.viewList.viewIdList.push(id);
     } else {
@@ -38,7 +38,7 @@ class ViewLoader {
       throw new UserException({
         name: "registerView",
         message: "register view failed",
-        source: "code",
+        source: "code"
       });
     }
   }
@@ -56,7 +56,7 @@ class ViewLoader {
       throw new UserException({
         name: "setLaunchViewId",
         message: "set launch view id failed, can not find this view id",
-        source: "code",
+        source: "code"
       });
     }
   }
@@ -71,14 +71,14 @@ class ViewLoader {
         throw new UserException({
           name: "openLaunchView",
           message: "need setLaunchViewId",
-          source: "code",
+          source: "code"
         });
       }
     } else {
       throw new UserException({
         name: "openLaunchView",
         message: "open launch view failed, can not find this view id",
-        source: "code",
+        source: "code"
       });
     }
   }
@@ -103,10 +103,10 @@ class Kernel {
     this.config = new Config();
     this.update = new update({
       appVersion: this.appInfo.version,
-      updateConfigUrl: undefined,
+      updateConfigUrl: undefined
     });
     this.viewLoader = new ViewLoader({
-      debug: this.debug,
+      debug: this.debug
     });
   }
 }

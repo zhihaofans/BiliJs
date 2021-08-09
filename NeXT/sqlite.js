@@ -17,7 +17,7 @@ class SQLite {
     const db = this.init();
     db.update({
       sql: sql,
-      args: args,
+      args: args
     });
     db.close();
   }
@@ -47,7 +47,7 @@ class SQLite {
         while (sqlResult.next()) {
           data.push({
             id: sqlResult.get("id"),
-            value: sqlResult.get("value"),
+            value: sqlResult.get("value")
           });
         }
         sqlResult.close();
@@ -68,7 +68,7 @@ class SQLite {
           args = [key],
           result = db.query({
             sql: sql,
-            args: args,
+            args: args
           }),
           sql_data = this.parseSimpleQuery(result);
         if (sql_data && sql_data.length === 1) {
@@ -94,7 +94,7 @@ class SQLite {
           args = [value, key],
           update_result = db.update({
             sql: sql,
-            args: args,
+            args: args
           });
         db.close();
         return update_result.result || false;

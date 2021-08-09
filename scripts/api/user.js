@@ -6,7 +6,7 @@ class UserData {
     this.kernel = kernel;
     this.sqlite = new SQLite({
       dataBaseFile: this.kernel.global.SQLITE_FILE,
-      tableId,
+      tableId
     });
     this.cookies = this.sqlite.getSql("cookies");
     this.uid = this.sqlite.getSql("uid");
@@ -46,5 +46,5 @@ class User {
 }
 module.exports = {
   User,
-  UserData,
+  UserData
 };

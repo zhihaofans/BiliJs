@@ -9,8 +9,8 @@ const appVersion = {
   build: "62105010",
   network: "2",
   channel: "AppStore",
-  comicVersion: "4.0.0",
+  comicVersion: "4.0.0"
 };
 module.exports = {
-  appVersion,
+  appVersion
 };

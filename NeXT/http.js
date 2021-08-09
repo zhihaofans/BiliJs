@@ -19,7 +19,7 @@ class Http {
     const result = await $http.get({
       url: url,
       timeout: this.TIMEOUT,
-      header: new_header,
+      header: new_header
     });
     return url ? result : undefined;
   }
@@ -33,7 +33,7 @@ class Http {
       url: url,
       header: new_header,
       timeout: this.TIMEOUT,
-      body: postBody,
+      body: postBody
     });
     return url ? result : undefined;
   }
@@ -45,13 +45,13 @@ class Http {
       showsProgress: true, // Optional, default is true
       backgroundFetch: true, // Optional, default is false
       progress: progress,
-      handler: handler,
+      handler: handler
     });
   }
   cookieToObj(cookie) {
     if (cookie) {
       const cookie_result = {};
-      cookie.split(";").map((cookie_item) => {
+      cookie.split(";").map(cookie_item => {
         const item_split = cookie_item.trim().split("="),
           item_key = item_split[0],
           item_valve = item_split[1];
