@@ -13,8 +13,8 @@ try {
         disabled: false, // Optional
         handler: () => {
           $app.close();
-        }
-      }
-    ]
+        },
+      },
+    ],
   });
 }

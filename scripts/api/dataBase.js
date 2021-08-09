@@ -6,8 +6,6 @@ class DataBase extends SQLite {
   constructor(tableId) {
     super({ dataBaseFile: sqliteFile, tableId: tableId });
   }
-getAccessKey(){
-  this.g
-}
+  getAccessKey() {}
 }
 module.exports = DataBase;

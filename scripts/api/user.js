@@ -2,8 +2,12 @@ const SQLite = require("../../NeXT/sqlite"),
   http = require("../../NeXT/http");
 
 class UserData {
-  constructor() {
-    this.sqlite = new SQLite({ dataBaseFile:"/", tableId });
+  constructor(kernel) {
+    this.kernel = kernel;
+    this.sqlite = new SQLite({
+      dataBaseFile: this.kernel.global.SQLITE_FILE,
+      tableId,
+    });
     this.cookies = this.sqlite.getSql("cookies");
     this.uid = this.sqlite.getSql("uid");
     this.accesskey = core.getSql("accesskey");
@@ -34,12 +38,13 @@ class UserData {
 }
 
 class User {
-  constructor() {
+  constructor(kernel) {
+    this.kernel = kernel;
     this.userData = UserData();
   }
   isLogin() {}
 }
 module.exports = {
   User,
-  UserData
+  UserData,
 };

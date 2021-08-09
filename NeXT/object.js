@@ -16,5 +16,5 @@ class UserException {
 
 module.exports = {
   Result,
-  UserException
+  UserException,
 };

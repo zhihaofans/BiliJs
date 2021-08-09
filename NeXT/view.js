@@ -7,7 +7,7 @@ class ViewKit {
     $ui.push({
       props: {
         title: title,
-        navButtons: this.navButtons
+        navButtons: this.navButtons,
       },
       views: views,
       events: {
@@ -17,8 +17,8 @@ class ViewKit {
         shakeDetected: () => {
           //摇一摇￼
           $app.tips("这是摇一摇会出现的提示");
-        }
-      }
+        },
+      },
     });
   }
   renderView(title, views) {
@@ -28,7 +28,7 @@ class ViewKit {
         title: title,
         homeIndicatorHidden: false,
         modalPresentationStyle: 0,
-        navButtons: this.navButtons
+        navButtons: this.navButtons,
       },
       views: views,
       events: {
@@ -38,15 +38,15 @@ class ViewKit {
         shakeDetected: () => {
           //摇一摇￼
           $app.tips("这是摇一摇会出现的提示");
-        }
-      }
+        },
+      },
     });
   }
 }
 class ListKit extends ViewKit {
   constructor({ viewId }) {
     super({
-      viewId: viewId
+      viewId: viewId,
     });
   }
   renderIdx(title, listData, handler = (section, row, data) => {}) {
@@ -56,15 +56,15 @@ class ListKit extends ViewKit {
         props: {
           autoRowHeight: true,
           estimatedRowHeight: 10,
-          data: listData
+          data: listData,
         },
         layout: $layout.fill,
         events: {
           didSelect: (sender, indexPath, data) => {
             handler(indexPath.section, indexPath.row, data);
-          }
-        }
-      }
+          },
+        },
+      },
     ]);
   }
   pushIdx(title, listData, handler = (section, row, data) => {}) {
@@ -74,18 +74,18 @@ class ListKit extends ViewKit {
         props: {
           autoRowHeight: true,
           estimatedRowHeight: 10,
-          data: listData
+          data: listData,
         },
         layout: $layout.fill,
         events: {
           didSelect: (sender, indexPath, data) => {
             handler(indexPath.section, indexPath.row, data);
-          }
-        }
-      }
+          },
+        },
+      },
     ]);
   }
 }
 module.exports = {
-  ListKit
+  ListKit,
 };

@@ -15,14 +15,14 @@ class File {
   open(handler, types) {
     $drive.open({
       handler: handler,
-      types: types
+      types: types,
     });
   }
   save(name, data, handler) {
     $drive.save({
       data: data,
       name: name,
-      handler: handler
+      handler: handler,
     });
   }
   isDirectory(path) {
@@ -41,7 +41,7 @@ class File {
     if ($file.exists(dir) && $file.isDirectory(dir)) {
       let files = [];
       const fileList = $file.list(dir);
-      fileList.map(f => {
+      fileList.map((f) => {
         if (!$file.isDirectory(f)) {
           if (ext) {
             if (f.endsWith(`.${ext}`)) {
@@ -65,7 +65,7 @@ class File {
   write(path, data) {
     return $file.write({
       data: data,
-      path: path
+      path: path,
     });
   }
   absolutePath(path) {
@@ -88,7 +88,7 @@ class File {
       throw new UserException({
         name: "File.mkdir",
         message: `this is file:${dir}`,
-        source: "dir"
+        source: "dir",
       });
     }
     return $file.mkdir(dir);
@@ -110,5 +110,5 @@ class Prefs {
 module.exports = {
   Cache,
   File,
-  Prefs
+  Prefs,
 };
