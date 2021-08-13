@@ -1,11 +1,15 @@
 const SQLite = require("../../NeXT/sqlite"),
   { File } = require("../../NeXT/storage"),
-  fileKit = new File();
+  fileKit = new File(),
+  sqliteFileName = "bilibili.db",
+  tableId = "bilibili";
 class DataBase extends SQLite {
-  constructor({ tableId, kernel }) {
-    super({ dataBaseFile: sqliteFile, tableId: tableId });
+  constructor(kernel) {
+    super({
+      dataBaseFile: kernel.global.SQLITE_DIR + sqliteFileName,
+      tableId: tableId
+    });
     this.kernel = kernel;
-    this.sqliteFileName = "/assets/.files/sqlite/bilibili.db";
   }
   getAccessKey() {}
 }
