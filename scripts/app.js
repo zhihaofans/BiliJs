@@ -3,7 +3,7 @@ class AppKernel extends Kernel {
   constructor() {
     super({ debugMode: true });
     this.global = {
-      SQLITE_FILE: "/assets/.files/sqlite.db"
+      SQLITE_DIR: "/assets/.files/sqlite/"
     };
     this.viewLoader.registerView({
       id: "main",
