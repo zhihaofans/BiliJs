@@ -1,10 +1,8 @@
 const storage = require("./storage");
 class SQLite {
-  constructor({ dataBaseFile, tableId }) {
+  constructor({ dataBaseFile }) {
     this.dataBaseFile = dataBaseFile;
-    this.tableId = tableId;
     this.file = new storage.File();
-    this.createSimpleTable();
   }
   init() {
     const dataBasrSaveDir = this.file.getDirByFile(this.dataBaseFile);
@@ -21,18 +19,18 @@ class SQLite {
     });
     db.close();
   }
-  createSimpleTable() {
-    if (this.tableId) {
+  createSimpleTable(tableId) {
+    if (tableId) {
       try {
         const db = this.init(),
-          sql = `CREATE TABLE IF NOT EXISTS ${this.tableId}(id TEXT PRIMARY KEY NOT NULL, value TEXT)`;
+          sql = `CREATE TABLE IF NOT EXISTS ${tableId}(id TEXT PRIMARY KEY NOT NULL, value TEXT)`;
         db.update({ sql: sql, args: undefined });
         db.close();
       } catch (_ERROR) {
         $console.error(_ERROR);
       }
     } else {
-      $console.error("createSimpleTable:this.tableId = undefined");
+      $console.error("createSimpleTable:tableId = undefined");
     }
   }
   parseSimpleQuery(result) {
@@ -60,11 +58,11 @@ class SQLite {
       return undefined;
     }
   }
-  getSimpleData(key) {
+  getSimpleData(tableId, key) {
     try {
-      if (this.tableId && key) {
+      if (tableId && key) {
         const db = this.init(),
-          sql = `SELECT * FROM ${this.tableId} WHERE id = ?`,
+          sql = `SELECT * FROM ${tableId} WHERE id = ?`,
           args = [key],
           result = db.query({
             sql: sql,
@@ -84,13 +82,13 @@ class SQLite {
       return undefined;
     }
   }
-  setSimpleData(key, value) {
+  setSimpleData(tableId, key, value) {
     try {
-      if (this.tableId && key) {
+      if (tableId && key) {
         const db = this.init(),
-          sql = this.getSimpleData(key)
-            ? `UPDATE ${this.tableId} SET value=? WHERE id=?`
-            : `INSERT INTO ${this.tableId} (value,id) VALUES (?, ?)`,
+          sql = this.getSimpleData(tableId, key)
+            ? `UPDATE ${tableId} SET value=? WHERE id=?`
+            : `INSERT INTO ${tableId} (value,id) VALUES (?, ?)`,
           args = [value, key],
           update_result = db.update({
             sql: sql,
@@ -106,25 +104,25 @@ class SQLite {
       return false;
     }
   }
-  auto(sql_key, value = undefined) {
-    if (!sql_key || !this.tableId) {
+  auto(tableId, sql_key, value = undefined) {
+    if (!sql_key || !tableId) {
       return undefined;
     }
     try {
       if (value) {
-        this.setSimpleData(sql_key, value.toString());
+        this.setSimpleData(tableId, sql_key, value.toString());
       }
-      return this.getSimpleData(sql_key) || undefined;
+      return this.getSimpleData(tableId, sql_key) || undefined;
     } catch (_ERROR) {
       $console.error(`SQLite.auto:${_ERROR.message}`);
       return undefined;
     }
   }
-  getSql(key) {
-    return this.auto(key);
+  getSql(tableId, key) {
+    return this.auto(tableId, key);
   }
-  setSql(key, value) {
-    return this.setSimpleData(key, value);
+  setSql(tableId, key, value) {
+    return this.setSimpleData(tableId, key, value);
   }
 }
 
