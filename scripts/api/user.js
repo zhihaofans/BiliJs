@@ -2,11 +2,10 @@ const SQLite = require("../../NeXT/sqlite"),
   http = require("../../NeXT/http");
 
 class UserData {
-  constructor(kernel) {
-    this.kernel = kernel;
+  constructor(appKernel) {
+    this.appKernel = appKernel;
     this.sqlite = new SQLite({
-      dataBaseFile: this.kernel.global.SQLITE_FILE,
-      tableId
+      dataBaseFile: this.kernel.global.SQLITE_FILE
     });
     this.cookies = this.sqlite.getSql("cookies");
     this.uid = this.sqlite.getSql("uid");
