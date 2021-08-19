@@ -1,6 +1,4 @@
-const SQLite = require("../../NeXT/sqlite"),
-  { File } = require("../../NeXT/storage"),
-  fileKit = new File();
+const SQLite = require("../../NeXT/sqlite");
 class DataBase {
   constructor({ appKernel, sqliteFile }) {
     this.kernel = appKernel;
@@ -11,10 +9,12 @@ class DataBase {
   getData(tableId, key) {
     return this.sql.getSimpleData(tableId, key);
   }
-  setData(tableId, key, value) {}
+  setData(tableId, key, value) {
+    this.sql.setSimpleData(tableId, key, value);
+  }
 }
 class User {
-  constructor({ appKernel, sqliteFile }) {
+  constructor({ appKernel }) {
     this.dataBase = new DataBase({
       appKernel,
       sqliteFile: "user.db"
