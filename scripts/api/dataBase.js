@@ -14,7 +14,7 @@ class DataBase {
   setData(tableId, key, value) {}
 }
 class User {
-  constructor({ appKernel, sqliteFile }) {
+  constructor({ appKernel }) {
     this.dataBase = new DataBase({
       appKernel,
       sqliteFile: "user.db"
