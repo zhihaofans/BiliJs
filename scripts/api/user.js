@@ -38,7 +38,7 @@ class UserData {
     }
   }
   removeAllData() {
-    
+    this.DB.removeAllData();
   }
 }
 

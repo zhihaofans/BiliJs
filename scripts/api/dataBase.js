@@ -14,6 +14,9 @@ class DataBase {
   setData(tableId, key, value) {
     this.sql.setSimpleData(tableId, key, value);
   }
+  removeData(tableId, key) {
+    this.sql.remove(tableId, key);
+  }
 }
 class User {
   constructor({ appKernel }) {
@@ -39,6 +42,11 @@ class User {
   }
   setCookies(value) {
     this.dataBase.setData("login_data", "cookies", value);
+  }
+  removeAllData() {
+    this.dataBase.removeData("login_data", "access_key");
+    this.dataBase.removeData("login_data", "uid");
+    this.dataBase.removeData("login_data", "cookies");
   }
 }
 module.exports = {
