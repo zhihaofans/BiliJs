@@ -106,29 +106,31 @@ class SQLite {
   }
   remove(tableId, key) {
     if (tableId && key) {
-      const db = this.init(),
-        sql = this.getSimpleData(tableId, key)
-          ? `UPDATE ${tableId} SET value=? WHERE id=?`
-          : `INSERT INTO ${tableId} (value,id) VALUES (?, ?)`,
-        args = [value, key],
-        update_result = db.update({
+      try {
+        const db = this.init(),
+          sql = `DELETE FROM ${tableId} WHERE id=?`;
+        db.update({
           sql: sql,
-          args: args
+          args: undefined
         });
-      db.close();
+        db.close();
+      } catch (_ERROR) {
+        $console.error(_ERROR);
+      }
     }
   }
   auto(tableId, sql_key, value = undefined) {
-    if (!sql_key || !tableId) {
-      return undefined;
-    }
-    try {
-      if (value) {
-        this.setSimpleData(tableId, sql_key, value.toString());
+    if (sql_key && tableId) {
+      try {
+        if (value) {
+          this.setSimpleData(tableId, sql_key, value.toString());
+        }
+        return this.getSimpleData(tableId, sql_key) || undefined;
+      } catch (_ERROR) {
+        $console.error(`SQLite.auto:${_ERROR.message}`);
+        return undefined;
       }
-      return this.getSimpleData(tableId, sql_key) || undefined;
-    } catch (_ERROR) {
-      $console.error(`SQLite.auto:${_ERROR.message}`);
+    } else {
       return undefined;
     }
   }
