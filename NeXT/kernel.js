@@ -60,27 +60,30 @@ class ViewLoader {
       });
     }
   }
-  openLaunchView() {
-    if (this.launchViewId && this.viewList.viewList[this.launchViewId]) {
-      const launchViewItem = this.viewList.viewList[this.launchViewId];
+  openView(viewId) {
+    if (viewId && this.viewList.viewList[viewId]) {
+      const launchViewItem = this.viewList.viewList[viewId];
       if (launchViewItem) {
         require(`/scripts/view/${launchViewItem.fileName}`)[
           launchViewItem.func
         ]();
       } else {
         throw new UserException({
-          name: "openLaunchView",
-          message: "need setLaunchViewId",
+          name: "openView",
+          message: "need viewId",
           source: "code"
         });
       }
     } else {
       throw new UserException({
-        name: "openLaunchView",
-        message: "open launch view failed, can not find this view id",
+        name: "openView",
+        message: "open view failed, can not find this view id",
         source: "code"
       });
     }
+  }
+  openLaunchView() {
+    this.openView(this.launchViewId);
   }
 }
 
