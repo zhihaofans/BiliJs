@@ -1,47 +1,56 @@
-const SQLite = require("../../NeXT/sqlite"),
+const dataBase = require("./dataBase"),
   http = require("../../NeXT/http");
 
 class UserData {
   constructor(appKernel) {
     this.appKernel = appKernel;
-    this.sqlite = new SQLite({
-      dataBaseFile: this.kernel.global.SQLITE_FILE
+    this.http = new http(3);
+    this.DB = new dataBase.User({
+      appKernel
     });
-    this.cookies = this.sqlite.getSql("cookies");
-    this.uid = this.sqlite.getSql("uid");
-    this.accesskey = core.getSql("accesskey");
+    this.loadingData();
+  }
+  loadingData() {
+    this.cookies = this.DB.getCookies();
+    this.uid = this.DB.getUid();
+    this.accesskey = this.DB.getAccessKey();
   }
   setAccesskey(newAccesskey) {
     if (newAccesskey) {
-      this.core.setSql("accesskey", newAccesskey);
-      this.accesskey = newAccesskey;
+      this.DB.setAccessKey(newAccesskey);
+      this.loadingData();
     }
   }
   setCookies(newCookies) {
     if (newCookies) {
-      this.core.setSql("cookies", newCookies);
-      this.cookies = newCookies;
+      this.DB.setCookies(newCookies);
       const cookieResult = this.Http.cookieToObj(newCookies);
-      this.Http.setCookies(this.getCookies());
       if (cookieResult.DedeUserID) {
-        this.setUid(cookieResult.DedeUserID);
+        this.DB.setUid(cookieResult.DedeUserID);
       }
+      this.loadingData();
     }
   }
   setUid(newUid) {
     if (newUid) {
-      this.core.setSql("uid", newUid);
-      this.uid = newUid;
+      this.DB.setUid(newUid);
+      this.loadingData();
     }
   }
 }
 
 class User {
-  constructor(kernel) {
-    this.kernel = kernel;
-    this.userData = UserData();
+  constructor(appKernel) {
+    this.appKernel = appKernel;
+    this.userData = new UserData(appKernel);
   }
-  isLogin() {}
+  isLogin() {
+    this.userData.loadingData();
+    const accessKey = this.userData.accesskey,
+      uid = this.userData.uid,
+      cookies = this.userData.cookies;
+    return accessKey || uid || cookies;
+  }
 }
 module.exports = {
   User,
