@@ -37,6 +37,9 @@ class UserData {
       this.loadingData();
     }
   }
+  removeAllData() {
+    
+  }
 }
 
 class User {
@@ -49,7 +52,7 @@ class User {
     const accessKey = this.userData.accesskey,
       uid = this.userData.uid,
       cookies = this.userData.cookies;
-    return accessKey || uid || cookies;
+    return accessKey && uid && cookies;
   }
 }
 module.exports = {

@@ -11,7 +11,9 @@ class DataBase {
   getData(tableId, key) {
     return this.sql.getSimpleData(tableId, key);
   }
-  setData(tableId, key, value) {}
+  setData(tableId, key, value) {
+    this.sql.setSimpleData(tableId, key, value);
+  }
 }
 class User {
   constructor({ appKernel }) {

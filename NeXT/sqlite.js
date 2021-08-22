@@ -104,6 +104,20 @@ class SQLite {
       return false;
     }
   }
+  remove(tableId, key) {
+    if (tableId && key) {
+      const db = this.init(),
+        sql = this.getSimpleData(tableId, key)
+          ? `UPDATE ${tableId} SET value=? WHERE id=?`
+          : `INSERT INTO ${tableId} (value,id) VALUES (?, ?)`,
+        args = [value, key],
+        update_result = db.update({
+          sql: sql,
+          args: args
+        });
+      db.close();
+    }
+  }
   auto(tableId, sql_key, value = undefined) {
     if (!sql_key || !tableId) {
       return undefined;
