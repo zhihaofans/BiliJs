@@ -75,11 +75,10 @@ class File {
     if (this.isDirectory(path)) {
       return path;
     }
-    if (this.isFile(path)) {
-      const dir_path_end = path.lastIndexOf("/");
-      if (dir_path_end >= 0) {
-        return path.slice(0, dir_path_end + 1);
-      }
+
+    const dir_path_end = path.lastIndexOf("/");
+    if (dir_path_end >= 0) {
+      return path.slice(0, dir_path_end + 1);
     }
     return undefined;
   }
