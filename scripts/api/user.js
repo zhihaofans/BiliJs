@@ -13,7 +13,7 @@ class UserData {
   loadingData() {
     this.cookies = this.DB.getCookies();
     this.uid = this.DB.getUid();
-    this.accesskey = this.DB.getAccessKey();
+    this.accessKey = this.DB.getAccessKey();
   }
   setAccesskey(newAccesskey) {
     if (newAccesskey) {
@@ -53,6 +53,39 @@ class User {
       uid = this.userData.uid,
       cookies = this.userData.cookies;
     return accessKey && uid && cookies;
+  }
+  setLoginData() {
+    $ui.menu({
+      items: ["access key", "cookies"],
+      handler: (title, idx) => {
+        switch (idx) {
+          case 0:
+            $input.text({
+              type: $kbType.text,
+              placeholder: title,
+              text: this.userData.accessKey,
+              handler: function (newAccessKey) {
+                if (newAccessKey) {
+                  this.userData.setAccessKey(newAccessKey);
+                }
+              }
+            });
+            break;
+          case 1:
+            $input.text({
+              type: $kbType.text,
+              placeholder: title,
+              text: this.userData.cookies,
+              handler: function (newCookies) {
+                if (newCookies) {
+                  this.userData.setCookies(newCookies);
+                }
+              }
+            });
+            break;
+        }
+      }
+    });
   }
 }
 module.exports = {

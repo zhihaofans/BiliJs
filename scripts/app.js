@@ -31,7 +31,7 @@ class AppKernel extends Kernel {
     if (this.user.isLogin()) {
       this.viewLoader.openLaunchView();
     } else {
-      this.viewLoader.openView("login");
+      this.viewLoader.openView("login", this);
     }
   }
 }

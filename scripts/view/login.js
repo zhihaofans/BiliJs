@@ -1,8 +1,8 @@
 const init = appKernel => {
     $console.info("login.init");
-    initView();
+    initView(appKernel);
   },
-  initView = () => {
+  initView = appKernel => {
     $ui.alert({
       title: "未登录",
       message: "请登录",
@@ -10,7 +10,9 @@ const init = appKernel => {
         {
           title: "OK",
           disabled: false, // Optional
-          handler: () => {}
+          handler: () => {
+            appKernel.user.setLoginData();
+          }
         }
       ]
     });
