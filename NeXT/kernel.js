@@ -60,13 +60,19 @@ class ViewLoader {
       });
     }
   }
-  openView(viewId) {
+  openView(viewId, AppKernel = undefined) {
     if (viewId && this.viewList.viewList[viewId]) {
       const launchViewItem = this.viewList.viewList[viewId];
       if (launchViewItem) {
-        require(`/scripts/view/${launchViewItem.fileName}`)[
-          launchViewItem.func
-        ]();
+        if (AppKernel) {
+          require(`/scripts/view/${launchViewItem.fileName}`)[
+            launchViewItem.func
+          ](AppKernel);
+        } else {
+          require(`/scripts/view/${launchViewItem.fileName}`)[
+            launchViewItem.func
+          ]();
+        }
       } else {
         throw new UserException({
           name: "openView",
@@ -82,8 +88,8 @@ class ViewLoader {
       });
     }
   }
-  openLaunchView() {
-    this.openView(this.launchViewId);
+  openLaunchView(AppKernel = undefined) {
+    this.openView(this.launchViewId, AppKernel);
   }
 }
 
