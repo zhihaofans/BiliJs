@@ -1,4 +1,4 @@
-const SQLite = require("../../NeXT/sqlite"),
+const { SQLite } = require("../../NeXT/sqlite"),
   { File } = require("../../NeXT/storage"),
   fileKit = new File();
 class DataBase {

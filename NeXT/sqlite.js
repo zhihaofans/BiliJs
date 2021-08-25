@@ -1,23 +1,39 @@
-const storage = require("./storage");
+const storage = require("./storage"),
+  { UserException } = require("./object");
 class SQLite {
   constructor({ dataBaseFile }) {
     this.dataBaseFile = dataBaseFile;
     this.file = new storage.File();
   }
   init() {
-    const dataBasrSaveDir = this.file.getDirByFile(this.dataBaseFile);
-    if (!this.file.isFile(dataBasrSaveDir)) {
-      this.file.mkdir(dataBasrSaveDir);
+    if (this.dataBaseFile) {
+      const dataBasrSaveDir = this.file.getDirByFile(this.dataBaseFile);
+      if (dataBasrSaveDir) {
+        if (!this.file.isFile(dataBasrSaveDir)) {
+          this.file.mkdir(dataBasrSaveDir);
+        }
+        return $sqlite.open(this.dataBaseFile);
+      }
+      $console.info(this.dataBaseFile);
+    } else {
+      return undefined;
     }
-    return $sqlite.open(this.dataBaseFile);
   }
   update(sql, args = undefined) {
     const db = this.init();
-    db.update({
-      sql: sql,
-      args: args
-    });
-    db.close();
+    if (db) {
+      db.update({
+        sql: sql,
+        args: args
+      });
+      db.close();
+    } else {
+      throw new UserException({
+        name: "sqlite.update",
+        message: "sqlite.init failed",
+        source: "code"
+      });
+    }
   }
   createSimpleTable(tableId) {
     if (tableId) {
@@ -61,13 +77,10 @@ class SQLite {
   getSimpleData(tableId, key) {
     try {
       if (tableId && key) {
-        const db = this.init(),
-          sql = `SELECT * FROM ${tableId} WHERE id = ?`,
+        this.createSimpleTable(tableId);
+        const sql = `SELECT * FROM ${tableId} WHERE id = ?`,
           args = [key],
-          result = db.query({
-            sql: sql,
-            args: args
-          }),
+          result = this.update(sql, args),
           sql_data = this.parseSimpleQuery(result);
         if (sql_data && sql_data.length === 1) {
           return sql_data[0].value;
@@ -90,11 +103,8 @@ class SQLite {
             ? `UPDATE ${tableId} SET value=? WHERE id=?`
             : `INSERT INTO ${tableId} (value,id) VALUES (?, ?)`,
           args = [value, key],
-          update_result = db.update({
-            sql: sql,
-            args: args
-          });
-        db.close();
+          update_result = this.update(sql, args);
+
         return update_result.result || false;
       } else {
         return false;
@@ -107,13 +117,8 @@ class SQLite {
   remove(tableId, key) {
     if (tableId && key) {
       try {
-        const db = this.init(),
-          sql = `DELETE FROM ${tableId} WHERE id=?`;
-        db.update({
-          sql: sql,
-          args: undefined
-        });
-        db.close();
+        const sql = `DELETE FROM ${tableId} WHERE id=?`;
+        this.update(sql);
       } catch (_ERROR) {
         $console.error(_ERROR);
       }
@@ -142,4 +147,6 @@ class SQLite {
   }
 }
 
-module.exports = SQLite;
+module.exports = {
+  SQLite
+};
