@@ -14,6 +14,7 @@ class UserData {
     this.cookies = this.DB.getCookies();
     this.uid = this.DB.getUid();
     this.accessKey = this.DB.getAccessKey();
+    $console.info(this.accessKey);
   }
   setAccesskey(newAccesskey) {
     if (newAccesskey) {
@@ -49,10 +50,9 @@ class User {
   }
   isLogin() {
     this.userData.loadingData();
-    const accessKey = this.userData.accesskey,
-      uid = this.userData.uid,
-      cookies = this.userData.cookies;
-    return accessKey && uid && cookies;
+    return (
+      this.userData.accesskey && this.userData.uid && this.userData.cookies
+    );
   }
   setLoginData() {
     $ui.menu({
@@ -64,9 +64,9 @@ class User {
               type: $kbType.text,
               placeholder: title,
               text: this.userData.accessKey,
-              handler: function (newAccessKey) {
+              handler: newAccessKey => {
                 if (newAccessKey) {
-                  this.userData.setAccessKey(newAccessKey);
+                  this.userData.setAccesskey(newAccessKey);
                 }
               }
             });
@@ -76,7 +76,7 @@ class User {
               type: $kbType.text,
               placeholder: title,
               text: this.userData.cookies,
-              handler: function (newCookies) {
+              handler: newCookies => {
                 if (newCookies) {
                   this.userData.setCookies(newCookies);
                 }

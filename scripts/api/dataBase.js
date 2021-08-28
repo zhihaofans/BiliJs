@@ -9,10 +9,10 @@ class DataBase {
     });
   }
   getData(tableId, key) {
-    return this.sql.getSimpleData(tableId, key);
+    return this.sql.getSql(tableId, key);
   }
   setData(tableId, key, value) {
-    this.sql.setSimpleData(tableId, key, value);
+    this.sql.setSql(tableId, key, value);
   }
   removeData(tableId, key) {
     this.sql.remove(tableId, key);
@@ -24,29 +24,35 @@ class User {
       appKernel,
       sqliteFile: "user.db"
     });
+    this.TABLE_ID = "login_data";
+    this.DB_KEY = {
+      ACCESS_KEY: "access_key",
+      COOKIES: "cookies",
+      UID: "uid"
+    };
   }
   getAccessKey() {
-    return this.dataBase.getData("login_data", "access_key");
+    return this.dataBase.getData(this.TABLE_ID, this.DB_KEY.ACCESS_KEY);
   }
   setAccessKey(value) {
-    this.dataBase.setData("login_data", "access_key", value);
+    this.dataBase.setData(this.TABLE_ID, this.DB_KEY.ACCESS_KEY, value);
   }
   getUid() {
-    return this.dataBase.getData("login_data", "uid");
+    return this.dataBase.getData(this.TABLE_ID, this.DB_KEY.UID);
   }
   setUid(value) {
-    this.dataBase.setData("login_data", "uid", value);
+    this.dataBase.setData(this.TABLE_ID, this.DB_KEY.UID, value);
   }
   getCookies() {
-    return this.dataBase.getData("login_data", "cookies");
+    return this.dataBase.getData(this.TABLE_ID, this.DB_KEY.COOKIES);
   }
   setCookies(value) {
-    this.dataBase.setData("login_data", "cookies", value);
+    this.dataBase.setData(this.TABLE_ID, this.DB_KEY.COOKIES, value);
   }
   removeAllData() {
-    this.dataBase.removeData("login_data", "access_key");
-    this.dataBase.removeData("login_data", "uid");
-    this.dataBase.removeData("login_data", "cookies");
+    this.dataBase.removeData(this.TABLE_ID, this.DB_KEY.ACCESS_KEY);
+    this.dataBase.removeData(this.TABLE_ID, this.DB_KEY.COOKIES);
+    this.dataBase.removeData(this.TABLE_ID, this.DB_KEY.UID);
   }
 }
 module.exports = {
