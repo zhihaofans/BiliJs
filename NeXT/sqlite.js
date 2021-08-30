@@ -1,5 +1,13 @@
 const storage = require("./storage"),
   { UserException } = require("./object");
+
+class Core {
+  constructor({ dataBaseFile }) {
+    this.dataBaseFile = dataBaseFile;
+    this.file = new storage.File();
+  }
+}
+
 class SQLite {
   constructor({ dataBaseFile }) {
     this.dataBaseFile = dataBaseFile;
@@ -103,7 +111,7 @@ class SQLite {
             ? `UPDATE ${tableId} SET value=? WHERE id=?`
             : `INSERT INTO ${tableId} (value,id) VALUES (?, ?)`,
           args = [value, key],
-          update_result = this.update(sql, args);
+          update_result = db.update(sql, args);
 
         return update_result.result || false;
       } else {
